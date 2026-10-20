@@ -31,20 +31,18 @@ API работает только по HTTP, поэтому браузер об�
 
 Структура: `src/api` (запросы), `src/store` (Redux slice с `createAsyncThunk`), `src/components` (UI). План: [docs/PLAN.md](docs/PLAN.md), описание API: [docs/api.md](docs/api.md).
 
+## Как сделано
+
+Проект сделан с помощью ИИ-ассистента (Claude Code), и это указано в коммитах (`Co-Authored-By: Claude`). Распределение ролей:
+
+- **Ассистент:** написал код приложения, тесты, документацию и выполнил деплой по моим указаниям.
+- **Автор (я):** поставил задачу по ТЗ, выбрал стек и архитектуру, утвердил план, проверял результат в браузере на реальном API и принимал решения (например, прокси для HTTP-only API, обработка ответа `403 Request quota exceeded!`).
+- **Проверка:** тесты (`npm test`), сборка, ручной прогон обоих этапов на демо. Ревью кода нашло и исправило реальные проблемы: потерю текста ошибки API при HTTP 403, возможную перезапись результатов устаревшим ответом, дубли `key` в таблице и нулевые цены.
+
+Разбор кода и принятых решений: [docs/INTERVIEW.md](docs/INTERVIEW.md).
+
 ## Skills для Claude Code
 
-Skills [mattpocock/skills](https://github.com/mattpocock/skills) уже лежат в репозитории (`.claude/skills`, версии в `skills-lock.json`). После `git clone` и открытия папки в Claude Code они подхватываются автоматически, ничего скачивать не нужно.
+В `.claude/skills` лежит набор из [mattpocock/skills](https://github.com/mattpocock/skills), нужный для процесса разработки (спецификация, задачи, TDD, ревью, PR). Версии зафиксированы в `skills-lock.json`; после `git clone` Claude Code подхватывает их автоматически.
 
-Обновить до свежих версий:
-
-```bash
-npx skills@latest update
-```
-
-Установить заново (если папку `.claude/skills` удалили):
-
-```bash
-npx skills@latest add mattpocock/skills -a claude-code -y
-```
-
-Первый запуск на новом компьютере: `/setup-matt-pocock-skills` (трекер задач — GitHub Issues), затем `/to-spec` и `/to-tickets` для разбиения плана из [docs/PLAN.md](docs/PLAN.md) на задачи.
+Обновить: `npx skills@latest update`. Установить заново: `npx skills@latest add mattpocock/skills -a claude-code -y`.
