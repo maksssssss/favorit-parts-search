@@ -2,6 +2,8 @@
 
 Тестовое задание: клиентское приложение на React (Redux, без TypeScript, Bootstrap) для поиска автозапчастей и аналогов через API Favorit Parts. Двухэтапный подбор: артикул → производитель → аналоги и предложения (название/производитель, цена, остаток).
 
+**Демо:** https://favorit-parts-search-ochre.vercel.app
+
 **Стек:** React 19 (Vite), Redux Toolkit, Bootstrap 5, без TypeScript. Тесты: Vitest.
 
 ## Запуск локально
