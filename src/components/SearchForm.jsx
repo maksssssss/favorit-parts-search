@@ -10,18 +10,22 @@ export default function SearchForm({ onSearch, disabled }) {
   }
 
   return (
-    <form className="input-group mb-4" onSubmit={submit}>
-      <input
-        type="text"
-        className="form-control"
-        placeholder="Введите артикул, например 7160500039S"
-        aria-label="Артикул"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-      <button className="btn btn-primary" type="submit" disabled={disabled || !value.trim()}>
-        Найти
-      </button>
+    <form onSubmit={submit}>
+      <div className="input-group input-group-lg">
+        <input
+          type="search"
+          className="form-control"
+          placeholder="Например, 7160500039S"
+          aria-label="Артикул"
+          autoFocus
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <button className="btn btn-primary px-4" type="submit" disabled={disabled || !value.trim()}>
+          {disabled ? 'Поиск...' : 'Найти'}
+        </button>
+      </div>
+      <div className="form-text">Введите артикул (номер) запчасти и нажмите Enter.</div>
     </form>
   )
 }
