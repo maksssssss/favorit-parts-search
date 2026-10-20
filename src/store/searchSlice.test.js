@@ -37,6 +37,19 @@ describe('searchSlice', () => {
     })
   })
 
+  it('устаревший ответ не перезаписывает результаты нового поиска', async () => {
+    let resolveOld
+    api.fetchBrands
+      .mockImplementationOnce(() => new Promise((resolve) => (resolveOld = resolve)))
+      .mockResolvedValueOnce(['NEW'])
+    const store = makeStore()
+    const oldRequest = store.dispatch(loadBrands('old'))
+    await store.dispatch(loadBrands('new'))
+    resolveOld(['OLD'])
+    await oldRequest
+    expect(store.getState().search).toMatchObject({ query: 'new', brands: ['NEW'] })
+  })
+
   it('новый поиск сбрасывает результаты этапа 2', async () => {
     api.fetchOffers.mockResolvedValue([{ id: 'x' }])
     api.fetchBrands.mockResolvedValue([])

@@ -30,6 +30,11 @@ describe('fetchBrands', () => {
     await expect(fetchBrands('123')).rejects.toThrow('Не удалось связаться')
   })
 
+  it('ошибка API с HTTP 403 сохраняет текст из тела ответа', async () => {
+    mockFetch({ error: 'Request quota exceeded!' }, false)
+    await expect(fetchBrands('123')).rejects.toThrow('Превышен лимит')
+  })
+
   it('HTTP-ошибка', async () => {
     mockFetch({}, false)
     await expect(fetchBrands('123')).rejects.toThrow('Ошибка сервера')
@@ -56,5 +61,17 @@ describe('fetchOffers', () => {
     const offers = await fetchOffers('1', 'MEYLE')
     expect(offers).toHaveLength(2)
     expect(offers[1]).toMatchObject({ brand: 'FEBI', price: 90, count: 3 })
+  })
+
+  it('id уникальны даже при одинаковых goodsID, нулевая цена -> null', async () => {
+    mockFetch({
+      goods: [
+        { goodsID: 'a', brand: 'X', number: '1', name: 'A', count: 0, price: 0 },
+        { goodsID: 'a', brand: 'X', number: '1', name: 'A', count: 1, price: 5 },
+      ],
+    })
+    const offers = await fetchOffers('1', 'X')
+    expect(new Set(offers.map((o) => o.id)).size).toBe(2)
+    expect(offers[0].price).toBeNull()
   })
 })
