@@ -29,10 +29,4 @@ API работает только по HTTP, поэтому браузер об�
 2. Выбор производителя → запрос `number + brand + analogues=on` → таблица: название / производитель, цена, остаток.
 3. Состояния загрузки (лоадеры), ошибки API и сети (с кнопкой «Повторить»), пустые результаты.
 
-Структура: `src/api` (запросы), `src/store` (Redux slice с `createAsyncThunk`), `src/components` (UI). План: [docs/PLAN.md](docs/PLAN.md), описание API: [docs/api.md](docs/api.md).
-
-## Skills для Claude Code
-
-В `.claude/skills` лежит набор из [mattpocock/skills](https://github.com/mattpocock/skills), нужный для процесса разработки (спецификация, задачи, TDD, ревью, PR). Версии зафиксированы в `skills-lock.json`; после `git clone` Claude Code подхватывает их автоматически.
-
-Обновить: `npx skills@latest update`. Установить заново: `npx skills@latest add mattpocock/skills -a claude-code -y`.
+Структура: `src/api` (запросы), `src/store` (Redux slice с `createAsyncThunk`), `src/components` (UI).
